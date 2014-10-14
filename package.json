@@ -3,9 +3,17 @@
   "version": "0.0.1",
   "description": "easy to create one page web application",
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leizongmin/node-lei-onepage.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Zongmin Lei <leizongmin@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leizongmin/node-lei-onepage/issues"
+  },
+  "homepage": "https://github.com/leizongmin/node-lei-onepage",
 }
