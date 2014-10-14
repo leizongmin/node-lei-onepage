@@ -1,0 +1,11 @@
+{
+  "name": "lei-one-page",
+  "version": "0.0.1",
+  "description": "easy to create one page web application",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zongmin Lei <leizongmin@gmail.com>",
+  "license": "MIT"
+}
