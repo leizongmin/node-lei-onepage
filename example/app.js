@@ -7,7 +7,7 @@
 var express = require('express');
 var OnePage = require('../');
 
-var one = new OnePage();
+var one = new OnePage({debug: false});
 one.add('demo', __dirname + '/demo');
 
 var app = express();

@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/leizongmin/node-lei-onepage",
   "dependencies": {
+    "clean-css": "^2.2.16",
     "connect": "^3.2.0",
     "debug": "^2.0.0",
     "express-liquid": "^0.2.5",
-    "tinyliquid": "^0.2.24"
+    "html-minifier": "^0.6.8",
+    "tinyliquid": "^0.2.24",
+    "uglify-js": "^2.4.15"
   }
 }

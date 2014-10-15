@@ -1,3 +1,6 @@
 body {
-  color: #888;
+  color: #555;
+}
+div {
+  border: 1px solid blue;
 }
