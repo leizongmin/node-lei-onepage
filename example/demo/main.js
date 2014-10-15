@@ -1,7 +1,15 @@
-/* comments */
-console.log('hello');
-for (var i = 0; i < 1000; i++) {
-  /* do nothing */
-}
+one.router.on('/', function (e) {
+  one.tpl.render('#main', 'index', {
+    now: new Date()
+  });
+});
 
-one.tpl.render('#main', 'p1');
+one.router.on('/about', function (e) {
+  one.tpl.render('#main', 'about');
+});
+
+one.router.on('/more', function (e) {
+  one.tpl.render('#main', 'more', {window: Object.keys(window).concat(Object.keys(window.__proto__))});
+});
+
+one.router.init();

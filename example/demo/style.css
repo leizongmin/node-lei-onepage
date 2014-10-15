@@ -1,6 +1,32 @@
 body {
   color: #555;
+  width: 980px;
+  margin: auto;
 }
-div {
-  border: 1px solid blue;
+#header {
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 50px;
+  padding: 10px;
+  background-color: #eee;
+}
+#footer {
+  border-top: 1px solid #aaa;
+  margin-top: 50px;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #eee;
+}
+#nav {
+
+}
+#nav a {
+  display: inline-block;
+  padding: 4px 10px;
+  color: #00F;
+  text-decoration: none;
+}
+#nav a:hover {
+  background-color: #00F;
+  color: #fff;
 }

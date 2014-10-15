@@ -4,19 +4,17 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Demo</title>
+  {% import style "style.css" %}
 </head>
 <body>
-  <h1>Demo</h1>
+  {% import html "header.html" as "header" %}
   <div id="main"></div>
+  {% import html "footer.html" as "footer" %}
 </body>
 </html>
 
 {% import lib "router" %}
-
-{% import tpl "p1.html" as "p1" %}
-
+{% import tpl "tpl/index.html" as "index" %}
+{% import tpl "tpl/about.html" as "about" %}
+{% import tpl "tpl/more.html" as "more" %}
 {% import script "main.js" as "script-main" %}
-
-{% import style "style.css" %}
-
-{% import html "footer.html" as "footer" %}
