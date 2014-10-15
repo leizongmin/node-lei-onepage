@@ -16,4 +16,10 @@
     "url": "https://github.com/leizongmin/node-lei-onepage/issues"
   },
   "homepage": "https://github.com/leizongmin/node-lei-onepage",
+  "dependencies": {
+    "connect": "^3.2.0",
+    "debug": "^2.0.0",
+    "express-liquid": "^0.2.5",
+    "tinyliquid": "^0.2.24"
+  }
 }
