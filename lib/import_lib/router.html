@@ -216,19 +216,19 @@ window.LeiOnePage = window.LeiOnePage || {};
   }
 
   function fixUrl (url) {
-    return startWithSlash(url) ? url : '/' + url;
+    return '!' + (startWithSlash(url) ? url : '/' + url);
   }
 
   // 注册全局控制器
   me.on = function (url, handle) {
-    url = fixUrl(url);
+    url = fixUrl(url).substr(1);
     me.router.add(url, handle);
     me.debug('监听: ' + url);
   };
 
   // 开始检查
   me.check = function (url) {
-    url = url || location.hash.substr(1);
+    url = url || location.hash.substr(2);
     if (!startWithSlash(url)) {
       me.debug('不符合要求的hash: ' + url);
       return;
