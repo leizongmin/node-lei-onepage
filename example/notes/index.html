@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Demo</title>
+  {% import style "style.css" %}
+</head>
+<body>
+  <div id="left">
+    <div class="container">
+      <div id="notes-list"></div>
+    </div>
+  </div>
+  <div id="right">
+    <div class="container">
+      <div id="main"></div>
+    </div>
+  </div>
+  <div id="bottom">
+    <div class="container">
+      <a href="#!/notes/new" class="btn">+</a>
+    </div>
+  </div>
+</body>
+</html>
+
+{% import lib "router" %}
+{% import lib "jquery" %}
+{% import lib "mindb" %}
+{% import lib "async" %}
+{% import lib "sweetalert" %}
+
+{% import tpl "tpl/notes_list.html" as "notes-list" %}
+{% import tpl "tpl/notes_detail.html" as "notes-detail" %}
+
+{% import script "main.js" as "script-main" %}

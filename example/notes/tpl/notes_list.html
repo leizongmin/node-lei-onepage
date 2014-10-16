@@ -1,0 +1,6 @@
+{% for item in list %}
+<div class="notes-item {% if item.timestamp == timestamp %}active{% endif %}">
+  <a class="notes-item-title" href="#!/notes/{{item.timestamp}}">{{item.title|escape}}</a>
+  <span class="notes-item-timestamp">{{item.timestamp|date:"%Y-%m-%d"}}</span>
+</div>
+{% endfor %}
