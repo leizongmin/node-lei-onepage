@@ -26,3 +26,12 @@ one.router.on('/window/:name', function (e) {
 setTimeout(function () {
   one.router.init();
 }, 0);
+
+min.store = new IndexedStore('myapp3');
+min.set('aaa', new Date().toString(), function (err) {
+  if (err) return console.error(err);
+  min.get('aaa', function (err, ret) {
+    if (err) return console.error(err);
+    console.log(ret);
+  });
+});
