@@ -10,6 +10,7 @@ function showError (err, detail) {
 }
 
 function saveNotes(timestamp, title, content, callback) {
+  callback = callback || showError;
   if (timestamp < 1) timestamp = Date.now();
   min.set('notes:list:' + timestamp, JSON.stringify({
     title: title,
@@ -78,6 +79,7 @@ function saveCurrentNotes (callback) {
   var timestamp = $('.notes-detail-title').data('timestamp');
   var title = $('.notes-detail-title').text();
   var content = $('.notes-detail-content').html();
+  if (!(timestamp > 0)) return callback && callback();
   saveNotes(timestamp, title, content, function (err) {
     if (err) return showError(err);
     callback && callback();
@@ -85,15 +87,6 @@ function saveCurrentNotes (callback) {
 }
 
 setInterval(saveCurrentNotes, 2000);
-
-// 添加初始数据
-min.keys('notes:list:*', function (err, keys) {
-  if (err) return showError(err);
-  if (keys.length < 1) {
-    saveNotes(0, '我的第一条笔记', '老雷为何这么屌');
-  }
-  refreshNotesList();
-});
 
 one.router.on('/new', function (e) {
   saveNotes(0, '新建笔记', '这里是内容', function (err, timestamp) {
@@ -118,3 +111,15 @@ one.router.on('/notes/:timestamp/del', function (e) {
     refreshNotesList();
   });
 });
+
+setTimeout(function () {
+  // 添加初始数据
+  min.keys('notes:list:*', function (err, keys) {
+    if (err) return showError(err);
+    if (keys.length < 1) {
+      saveNotes(0, '我的第一条笔记', '老雷为何这么屌');
+      swal({type: 'info', title: '欢迎使用！点击底部的【+】按钮添加笔记'});
+    }
+    refreshNotesList();
+  });
+}, 0);
