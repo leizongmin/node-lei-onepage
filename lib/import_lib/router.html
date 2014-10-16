@@ -288,7 +288,7 @@ window.LeiOnePage = window.LeiOnePage || {};
       me.debug('浏览器不支持hashchange事件');
     }
     // 首次打开页面
-    if (startWithSlash(location.hash.substr(1))) {
+    if (startWithSlash(location.hash.substr(2))) {
       onHashChange();
     } else {
       me.debug('首次打开页面');
