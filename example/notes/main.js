@@ -35,6 +35,14 @@ function getNotes (timestamp, callback) {
   }, 100);
 }
 
+function delNotes (timestamp, callback) {
+  min.del('notes:list:' + timestamp, function (err) {
+    min.del('notes:content:' + timestamp, function (err) {
+      callback && callback();
+    });
+  });
+}
+
 function refreshNotesList () {
   min.keys('notes:list:*', function (err, keys) {
     if (err) return showError(err);
@@ -54,6 +62,12 @@ function refreshNotesList () {
 var currentNotesTimestamp = 0;
 
 function renderNotesList (list) {
+  list.sort(function (a, b) {
+    return a.timestamp - b.timestamp;
+  });
+  list.forEach(function (a) {
+    a.title = a.title || '[未命名标题]';
+  });
   one.tpl.render('#notes-list', 'notes-list', {
     list: list,
     timestamp: currentNotesTimestamp
@@ -66,11 +80,11 @@ function saveCurrentNotes (callback) {
   var content = $('.notes-detail-content').html();
   saveNotes(timestamp, title, content, function (err) {
     if (err) return showError(err);
-    refreshNotesList();
     callback && callback();
   });
 }
 
+setInterval(saveCurrentNotes, 2000);
 
 // 添加初始数据
 min.keys('notes:list:*', function (err, keys) {
@@ -81,7 +95,7 @@ min.keys('notes:list:*', function (err, keys) {
   refreshNotesList();
 });
 
-one.router.on('/notes/new', function (e) {
+one.router.on('/new', function (e) {
   saveNotes(0, '新建笔记', '这里是内容', function (err, timestamp) {
     if (err) return showError(err, timestamp);
     one.router.redirect('/notes/' + timestamp);
@@ -96,5 +110,11 @@ one.router.on('/notes/:timestamp', function (e) {
       currentNotesTimestamp = notes.timestamp;
       refreshNotesList();
     });
+  });
+});
+
+one.router.on('/notes/:timestamp/del', function (e) {
+  delNotes(e.params.timestamp, function () {
+    refreshNotesList();
   });
 });
