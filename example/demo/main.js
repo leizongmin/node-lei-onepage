@@ -13,7 +13,16 @@ one.router.on('/more', function (e) {
 });
 
 one.router.on('/window/:name', function (e) {
-  one.tpl.render('#main', 'more', {window: Object.keys(window[e.params.name])});
+  try {
+    one.tpl.render('#main', 'more', {window: Object.keys(window[e.params.name])}, function (err) {
+      if (err) swal({type: 'error', title: err});
+      swal({type: 'success', title: 'window.' + e.params.name});
+    });
+  } catch (err) {
+    swal({type: 'error', title: err});
+  }
 });
 
-one.router.init();
+setTimeout(function () {
+  one.router.init();
+}, 0);
