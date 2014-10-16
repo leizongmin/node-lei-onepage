@@ -13,11 +13,7 @@
 </body>
 </html>
 
-{% import lib "mindb" %}
-{% import lib "sweetalert" %}
-{% import lib "async" %}
-{% import lib "router" %}
-{% import tpl "tpl/index.html" as "index" %}
-{% import tpl "tpl/about.html" as "about" %}
-{% import tpl "tpl/more.html" as "more" %}
+{% include "import.html" %}
+{% include "tpl.html" %}
+
 {% import script "main.js" as "script-main" %}
