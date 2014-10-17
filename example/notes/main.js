@@ -9,64 +9,18 @@ function showError (err, detail) {
   }
 }
 
-function saveNotes(timestamp, title, content, callback) {
-  callback = callback || showError;
-  if (timestamp < 1) timestamp = Date.now();
-  min.multi()
-    .set('notes:list:' + timestamp, JSON.stringify({
-      title: title,
-      timestamp: timestamp,
-      lastupdate: Date.now()
-    }))
-    .set('notes:content:' + timestamp, content)
-    .exec(function (err) {
-      min.save();
-      callback(err, timestamp);
-    });
-}
-
-function getNotes (timestamp, callback) {
-  setTimeout(function () {
-    min.get('notes:list:' + timestamp, function (err, data) {
-      if (err) return showError(err, 'notes list');
-      data = JSON.parse(data);
-      min.get('notes:content:' + timestamp, function (err, content) {
-        data.content = content || '';
-        callback(null, data);
-      });
-    });
-  }, 100);
-}
-
-function delNotes (timestamp, callback) {
-  min.del('notes:list:' + timestamp, function (err) {
-    min.del('notes:content:' + timestamp, function (err) {
-      callback && callback();
-    });
-  });
-}
+var currentNotesTimestamp = 0;
 
 function refreshNotesList () {
-  min.keys('notes:list:*', function (err, list) {
+  notes.list(function (err, list) {
     if (err) return showError(err);
-    if (list.length < 1) return renderNotesList([]);
-    async.mapSeries(list, function (key, next) {
-      min.get(key, function (err, data) {
-        if (data) data = JSON.parse(data);
-        next(err, data);
-      });
-    }, function (err, list) {
-      if (err) return showError(err);
-      renderNotesList(list);
-    });
+    renderNotesList(list || []);
   });
 }
-
-var currentNotesTimestamp = 0;
 
 function renderNotesList (list) {
   list.sort(function (a, b) {
-    return b.timestamp - a.timestamp;
+    return b.lastupdate - a.lastupdate;
   });
   list.forEach(function (a) {
     a.title = a.title || '[未命名标题]';
@@ -78,11 +32,13 @@ function renderNotesList (list) {
 }
 
 function saveCurrentNotes (callback) {
-  var timestamp = $('.notes-detail-title').data('timestamp');
-  var title = $('.notes-detail-title').text();
-  var content = $('.notes-detail-content').html();
-  if (!(timestamp > 0)) return callback && callback();
-  saveNotes(timestamp, title, content, function (err) {
+  var data = {
+    timestamp: $('.notes-detail-title').data('timestamp'),
+    title: $('.notes-detail-title').text(),
+    content: $('.notes-detail-content').html()
+  }
+  if (!(data.timestamp > 0)) return callback && callback();
+  notes.save(data, function (err) {
     if (err) return showError(err);
     callback && callback();
   });
@@ -91,35 +47,36 @@ function saveCurrentNotes (callback) {
 setInterval(saveCurrentNotes, 2000);
 
 one.router.on('/new', function (e) {
-  saveNotes(0, '新建笔记', '这里是内容', function (err, timestamp) {
-    if (err) return showError(err, timestamp);
-    one.router.redirect('/notes/' + timestamp);
+  notes.save({title: '新建笔记', content: '这里是内容'}, function (err, data) {
+    if (err) return showError(err, data.timestamp);
+    one.router.redirect('/notes/' + data.timestamp);
   })
 });
 
 one.router.on('/notes/:timestamp', function (e) {
   saveCurrentNotes(function () {
-    getNotes(e.params.timestamp, function (err, notes) {
+    notes.get(e.params.timestamp, function (err, data) {
       if (err) return showError(err);
-      one.tpl.render('#main', 'notes-detail', {notes: notes}, showError);
-      currentNotesTimestamp = notes.timestamp;
+      one.tpl.render('#main', 'notes-detail', {notes: data}, showError);
+      currentNotesTimestamp = data.timestamp;
       refreshNotesList();
     });
   });
 });
 
 one.router.on('/notes/:timestamp/del', function (e) {
-  delNotes(e.params.timestamp, function () {
+  notes.del(e.params.timestamp, function (err) {
+    if (err) showError(err);
     refreshNotesList();
   });
 });
 
 setTimeout(function () {
   // 添加初始数据
-  min.keys('notes:list:*', function (err, keys) {
+  notes.list(function (err, list) {
     if (err) return showError(err);
-    if (keys.length < 1) {
-      saveNotes(0, '我的第一条笔记', '随便写些啥呗');
+    if (list.length < 1) {
+      notes.save({title: '我的第一条笔记', content: '随便写些啥呗'}, showError);
       swal({type: 'info', title: '欢迎使用！点击底部的【+】按钮添加笔记'});
     }
     refreshNotesList();
