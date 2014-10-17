@@ -68,7 +68,7 @@ body {
   font-weight: bold;
   display: block;
 }
-.notes-item-timestamp {
+.notes-item-lastupdate {
   font-size: 12px;
   color: #AAA;
 }

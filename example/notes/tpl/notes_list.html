@@ -1,7 +1,7 @@
 {% for item in list %}
 <div class="notes-item {% if item.timestamp == timestamp %}active{% endif %}">
   <a class="notes-item-title" href="#!/notes/{{item.timestamp}}">{{item.title|escape}}</a>
-  <span class="notes-item-timestamp">{{item.timestamp|date:"%Y-%m-%d %H:%j"}}</span>
+  <span class="notes-item-lastupdate">{{item.lastupdate|date:"%Y-%m-%d %H:%j"}}</span>
   <a href="#!/notes/{{item.timestamp}}/del" class="del-notes-btn">删除</a>
 </div>
 {% endfor %}

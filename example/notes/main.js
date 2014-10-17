@@ -14,7 +14,8 @@ function saveNotes(timestamp, title, content, callback) {
   if (timestamp < 1) timestamp = Date.now();
   min.set('notes:list:' + timestamp, JSON.stringify({
     title: title,
-    timestamp: timestamp
+    timestamp: timestamp,
+    lastupdate: Date.now()
   }), function (err) {
     min.save();
     if (err) return callback(err);
@@ -66,7 +67,7 @@ var currentNotesTimestamp = 0;
 
 function renderNotesList (list) {
   list.sort(function (a, b) {
-    return a.timestamp - b.timestamp;
+    return b.timestamp - a.timestamp;
   });
   list.forEach(function (a) {
     a.title = a.title || '[未命名标题]';
