@@ -31,12 +31,6 @@ body {
   bottom: 0;
   background-color: #ECECE2;
 }
-#footer {
-  display: inline-block;
-  margin-left: 20px;
-  font-size: 18px;
-  color: #AAA;
-}
 .container {
   padding: 10px;
 }
@@ -56,6 +50,8 @@ body {
 .notes-detail-title {
   border: 1px solid #CCC;
   padding: 4px;
+  margin-top: 0;
+  margin-bottom: 12px;
 }
 .notes-detail-content {
   border: 1px solid #CCC;
