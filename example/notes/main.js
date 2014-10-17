@@ -9,6 +9,7 @@ function showError (err, detail) {
   }
 }
 
+var notes = global.notes;
 var currentNotesId = 0;
 
 function refreshNotesList () {

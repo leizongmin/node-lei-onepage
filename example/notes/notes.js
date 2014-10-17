@@ -18,7 +18,7 @@ function guid () {
 }
 
 
-var notes = window.notes = {};
+var notes = global.notes = {};
 
 notes._keyPrefix = 'notes:';
 
