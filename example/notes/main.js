@@ -117,7 +117,7 @@ setTimeout(function () {
   min.keys('notes:list:*', function (err, keys) {
     if (err) return showError(err);
     if (keys.length < 1) {
-      saveNotes(0, '我的第一条笔记', '老雷为何这么屌');
+      saveNotes(0, '我的第一条笔记', '随便写些啥呗');
       swal({type: 'info', title: '欢迎使用！点击底部的【+】按钮添加笔记'});
     }
     refreshNotesList();
