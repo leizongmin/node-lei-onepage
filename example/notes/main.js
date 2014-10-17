@@ -7,6 +7,7 @@ one.on('load', function () {
 
   // 添加初始数据
   var notes = one.ns('notes');
+  var showError = one.ns('showError');
   notes.list(function (err, list) {
     if (err) return showError(err);
     if (list.length < 1) {

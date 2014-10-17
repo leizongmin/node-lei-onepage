@@ -61,15 +61,10 @@ notes.del = function(id, callback) {
 };
 
 notes.list = function(callback) {
-  min.keys(notes._keyPrefix + 'list:*', function(err, keys) {
+  min.keys(notes._keyPrefix + 'list:*', function (err, keys) {
     if (err) return callback(err);
-    min.keys(notes._keyPrefix + 'list:*')
-     .then(function(keys) {
-        return min.mget(keys);
-     })
-     .then(function(list) {
-      callback(null, list);
-     }, callback);
+    if (keys.length < 1) return callback(null, []);
+    min.mget(keys, callback);
   });
 };
 

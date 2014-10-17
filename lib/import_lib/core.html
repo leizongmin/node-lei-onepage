@@ -362,4 +362,9 @@ LeiOnePage.events = new EventEmitter();
 LeiOnePage.on = LeiOnePage.events.on.bind(LeiOnePage.events);
 LeiOnePage.once = LeiOnePage.events.once.bind(LeiOnePage.events);
 LeiOnePage.emit = LeiOnePage.events.emit.bind(LeiOnePage.events);
+LeiOnePage._onLoad = function () {
+  setTimeout(function () {
+    LeiOnePage.emit('load');
+  }, 0);
+};
 </script>
