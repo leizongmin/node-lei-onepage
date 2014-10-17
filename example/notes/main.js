@@ -12,18 +12,17 @@ function showError (err, detail) {
 function saveNotes(timestamp, title, content, callback) {
   callback = callback || showError;
   if (timestamp < 1) timestamp = Date.now();
-  min.set('notes:list:' + timestamp, JSON.stringify({
-    title: title,
-    timestamp: timestamp,
-    lastupdate: Date.now()
-  }), function (err) {
-    min.save();
-    if (err) return callback(err);
-    min.set('notes:content:' + timestamp, content, function (err) {
+  min.multi()
+    .set('notes:list:' + timestamp, JSON.stringify({
+      title: title,
+      timestamp: timestamp,
+      lastupdate: Date.now()
+    }))
+    .set('notes:content:' + timestamp, content)
+    .exec(function (err) {
       min.save();
       callback(err, timestamp);
     });
-  });
 }
 
 function getNotes (timestamp, callback) {

@@ -10,6 +10,7 @@ body {
   bottom: 0;
   padding: 0;
   margin: 0;
+  overflow-y: scroll;
 }
 #right {
   background-color: #ECECE2;
