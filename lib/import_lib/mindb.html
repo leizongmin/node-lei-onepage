@@ -1082,8 +1082,10 @@ def('min.mix', [ 'min.utils', 'min.deps.events' ], function(require, exports, mo
     function out() {
       if (errors.length) {
         promise.reject(errors);
+        callback(errors);
       } else {
         promise.resolve(results);
+        callback(null, results);
       }
     }
 
