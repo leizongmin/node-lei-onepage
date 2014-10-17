@@ -20,12 +20,15 @@ body {
   bottom: 0;
   padding: 0;
   margin: 0;
+  overflow: scroll;
+  padding-bottom: 80px;
 }
 #bottom {
   position: absolute;
   width: 75%;
   right: 0;
   bottom: 0;
+  background-color: #ECECE2;
 }
 #footer {
   display: inline-block;
