@@ -9,7 +9,7 @@ function showError (err, detail) {
   }
 }
 
-var currentNotesTimestamp = 0;
+var currentNotesId = 0;
 
 function refreshNotesList () {
   notes.list(function (err, list) {
@@ -27,17 +27,17 @@ function renderNotesList (list) {
   });
   one.tpl.render('#notes-list', 'notes-list', {
     list: list,
-    timestamp: currentNotesTimestamp
+    current_id: currentNotesId
   }, showError);
 }
 
 function saveCurrentNotes (callback) {
   var data = {
-    timestamp: $('.notes-detail-title').data('timestamp'),
+    id: $('.notes-detail-title').data('id'),
     title: $('.notes-detail-title').text(),
     content: $('.notes-detail-content').html()
   }
-  if (!(data.timestamp > 0)) return callback && callback();
+  if (!data.id) return callback && callback();
   notes.save(data, function (err) {
     if (err) return showError(err);
     callback && callback();
@@ -48,24 +48,24 @@ setInterval(saveCurrentNotes, 2000);
 
 one.router.on('/new', function (e) {
   notes.save({title: '新建笔记', content: '这里是内容'}, function (err, data) {
-    if (err) return showError(err, data.timestamp);
-    one.router.redirect('/notes/' + data.timestamp);
+    if (err) return showError(err, data.id);
+    one.router.redirect('/notes/' + data.id);
   })
 });
 
-one.router.on('/notes/:timestamp', function (e) {
+one.router.on('/notes/:id', function (e) {
   saveCurrentNotes(function () {
-    notes.get(e.params.timestamp, function (err, data) {
+    notes.get(e.params.id, function (err, data) {
       if (err) return showError(err);
       one.tpl.render('#main', 'notes-detail', {notes: data}, showError);
-      currentNotesTimestamp = data.timestamp;
+      currentNotesId = data.id;
       refreshNotesList();
     });
   });
 });
 
-one.router.on('/notes/:timestamp/del', function (e) {
-  notes.del(e.params.timestamp, function (err) {
+one.router.on('/notes/:id/del', function (e) {
+  notes.del(e.params.id, function (err) {
     if (err) showError(err);
     refreshNotesList();
   });
