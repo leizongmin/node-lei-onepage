@@ -63,17 +63,13 @@ notes.del = function(id, callback) {
 notes.list = function(callback) {
   min.keys(notes._keyPrefix + 'list:*', function(err, keys) {
     if (err) return callback(err);
-    var multi = min.multi();
-    keys.forEach(function(key) {
-      multi.get(key);
-    });
-    multi.exec(function(err, replies) {
-      if (err) return callback(err);
-      var list = replies.map(function(ret) {
-        return ret[0];
-      });
+    min.keys(notes._keyPrefix + 'list:*')
+     .then(function(keys) {
+        return min.mget(keys);
+     })
+     .then(function(list) {
       callback(null, list);
-    });
+     }, callback);
   });
 };
 
