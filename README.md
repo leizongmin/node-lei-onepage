@@ -5,3 +5,4 @@ lei-onepage
 
 使用方法参考 `example`
 
+演示：http://notes.ucdok.com/
