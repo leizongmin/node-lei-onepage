@@ -1,6 +1,7 @@
 {% for item in list %}
 <div class="notes-item {% if item.id == current_id %}active{% endif %}">
   <a class="notes-item-title" href="#!/notes/{{item.id}}">{{item.title|escape}}</a>
+  <span class="notes-item-summary">{{item.summary|escape}}</span>
   <span class="notes-item-lastupdate">{{item.lastupdate|date:"%Y-%m-%d %H:%j"}}</span>
   <a href="#!/notes/{{item.id}}/del" class="del-notes-btn">删除</a>
 </div>

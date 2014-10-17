@@ -76,6 +76,14 @@ body {
   font-size: 12px;
   color: #AAA;
 }
+.notes-item-summary {
+  display: block;
+  font-size: 12px;
+  color: #AAA;
+  height: 1em;
+  padding: 6px 0;
+  overflow: hidden;
+}
 .notes-item.active .notes-item-title {
   color: #00f;
 }
