@@ -54,7 +54,7 @@ notes.get = function(id, callback) {
 notes.del = function(id, callback) {
   min.multi()
     .del(notes._getKey('list', id))
-    .del(notes._getKey('content'), id)
+    .del(notes._getKey('content', id))
     .exec(function(err) {
       callback(err, id);
     });
