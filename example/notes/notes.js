@@ -18,7 +18,7 @@ function guid () {
 }
 
 
-var notes = global.notes = {};
+var notes = {};
 
 notes._keyPrefix = 'notes:';
 
@@ -76,3 +76,5 @@ notes.list = function(callback) {
     });
   });
 };
+
+one.ns('notes', notes);
