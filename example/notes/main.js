@@ -16,8 +16,10 @@ function saveNotes(timestamp, title, content, callback) {
     title: title,
     timestamp: timestamp
   }), function (err) {
+    min.save();
     if (err) return callback(err);
     min.set('notes:content:' + timestamp, content, function (err) {
+      min.save();
       callback(err, timestamp);
     });
   });
@@ -45,10 +47,10 @@ function delNotes (timestamp, callback) {
 }
 
 function refreshNotesList () {
-  min.keys('notes:list:*', function (err, keys) {
+  min.keys('notes:list:*', function (err, list) {
     if (err) return showError(err);
-    if (keys.length < 1) return renderNotesList([]);
-    async.mapSeries(keys, function (key, next) {
+    if (list.length < 1) return renderNotesList([]);
+    async.mapSeries(list, function (key, next) {
       min.get(key, function (err, data) {
         if (data) data = JSON.parse(data);
         next(err, data);
