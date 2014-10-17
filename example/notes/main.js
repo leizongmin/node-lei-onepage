@@ -21,4 +21,11 @@ one.on('load', function () {
   setInterval(function () {
     one.emit('auto save');
   }, 2000);
+
+  // 程序更新
+  one.on('application cache update ready', function () {
+    swal({type: 'info', title: '程序已更新完毕！', text: '请刷新页面'});
+  });
+
 });
+

@@ -367,4 +367,14 @@ LeiOnePage._onLoad = function () {
     LeiOnePage.emit('load');
   }, 0);
 };
+
+LeiOnePage.once('load', function () {
+  function onUpdateReady () {
+    LeiOnePage.emit('application cache update ready');
+  }
+  applicationCache.addEventListener('updateready', onUpdateReady);
+  if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+    onUpdateReady();
+  }
+});
 </script>
