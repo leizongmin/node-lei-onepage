@@ -56,6 +56,7 @@ notes.del = function(id, callback) {
     .del(notes._getKey('list', id))
     .del(notes._getKey('content', id))
     .exec(function(err) {
+      min.save();
       callback(err, id);
     });
 };
