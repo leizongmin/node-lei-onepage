@@ -22,10 +22,20 @@ one.on('load', function () {
     one.emit('auto save');
   }, 2000);
 
-  // 程序更新
-  one.on('application cache update ready', function () {
-    swal({type: 'info', title: '程序已更新完毕！', text: '请刷新页面'});
-  });
-
 });
 
+// 程序更新
+one.on('application cache downloading', function () {
+  swal({type: 'info', title: '发现新版本，程序正在更新', text: '请稍候...'});
+});
+one.on('application cache update ready', function () {
+  swal({type: 'info', title: '程序已更新完毕！', text: '请刷新页面'});
+});
+
+// 在线状态
+one.on('application online', function () {
+  swal({type: 'info', title: '当前已在线'});
+});
+one.on('application offline', function () {
+  swal({type: 'info', title: '当前已离线'});
+});

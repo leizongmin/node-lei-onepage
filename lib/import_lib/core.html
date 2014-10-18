@@ -357,24 +357,43 @@ EventEmitter.inherits = function(ctor) {
 };
 </script>
 <script>
-LeiOnePage.ns = Namespace();
-LeiOnePage.events = new EventEmitter();
-LeiOnePage.on = LeiOnePage.events.on.bind(LeiOnePage.events);
-LeiOnePage.once = LeiOnePage.events.once.bind(LeiOnePage.events);
-LeiOnePage.emit = LeiOnePage.events.emit.bind(LeiOnePage.events);
-LeiOnePage._onLoad = function () {
-  setTimeout(function () {
-    LeiOnePage.emit('load');
-  }, 0);
-};
+(function (one) {
+  one.ns = Namespace();
+  one.events = new EventEmitter();
+  one.on = one.events.on.bind(one.events);
+  one.once = one.events.once.bind(one.events);
+  one.emit = one.events.emit.bind(one.events);
+  one._onLoad = function () {
+    setTimeout(function () {
+      one.emit('load');
+    }, 0);
+  };
 
-LeiOnePage.once('load', function () {
-  function onUpdateReady () {
-    LeiOnePage.emit('application cache update ready');
-  }
-  applicationCache.addEventListener('updateready', onUpdateReady);
-  if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-    onUpdateReady();
-  }
-});
+  one.once('load', function () {
+
+    // events: application cache
+    function onUpdateReady () {
+      one.emit('application cache update ready');
+    }
+    applicationCache.addEventListener('updateready', onUpdateReady);
+    if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+      onUpdateReady();
+    }
+    applicationCache.addEventListener('downloading', function () {
+      one.emit('application cache downloading');
+    });
+
+    // events: online or offline
+    window.addEventListener('online', function () {
+      one.emit('application online');
+    });
+    window.addEventListener('offline', function () {
+      one.emit('application offline');
+    });
+    if (!navigator.onLine) {
+      one.emit('application offline');
+    }
+
+  });
+})(LeiOnePage);
 </script>
